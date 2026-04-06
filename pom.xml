@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+		<!--
+            📦 Project: Spring Security JWT
+            🧠 Purpose: Demonstrates authentication & authorization using Spring Security + JWT
+            ☕ Tech Stack: Spring Boot 3, Java 17, JPA, Security, H2
+        -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<!-- ===================== BASIC PROJECT INFO ===================== -->
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- Spring Boot Parent (manages dependency versions automatically) -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.2.5</version> <!-- ✅ Stable version -->
+		<relativePath/>
+	</parent>
+
+	<!-- Project Coordinates -->
+	<groupId>com.akshay.spring-security-jwt</groupId>
+	<artifactId>SpringSecurityJWT</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<!-- Metadata -->
+	<name>SpringSecurityJWT</name>
+	<description>Spring Boot project implementing JWT-based authentication and authorization</description>
+
+	<!-- ===================== PROJECT PROPERTIES ===================== -->
+	<properties>
+		<java.version>17</java.version>
+	</properties>
+
+	<!-- ===================== DEPENDENCIES ===================== -->
+	<dependencies>
+
+		<!-- 🌐 Web Layer (REST APIs) -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!-- 🔐 Spring Security (Authentication & Authorization) -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<!-- 🗄️ JPA + Hibernate (Database ORM) -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<!-- 💾 In-Memory Database (for development/testing) -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- 🧠 Spring Session JDBC (store session in DB if needed) -->
+		<dependency>
+			<groupId>org.springframework.session</groupId>
+			<artifactId>spring-session-jdbc</artifactId>
+		</dependency>
+
+		<!-- 🔑 JWT Dependencies -->
+		<!-- API (interfaces for token creation/validation) -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.12.6</version>
+		</dependency>
+
+		<!-- Implementation (actual logic at runtime) -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.12.6</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- JSON processing (required for claims serialization) -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>0.12.6</version>
+		</dependency>
+
+		<!-- 🧪 Testing Dependencies -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- 🔐 Security Testing -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+	<!-- ===================== BUILD CONFIGURATION ===================== -->
+	<build>
+		<plugins>
+
+			<!-- 🚀 Spring Boot Plugin (for packaging & running app) -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+		</plugins>
+	</build>
+
+</project>
