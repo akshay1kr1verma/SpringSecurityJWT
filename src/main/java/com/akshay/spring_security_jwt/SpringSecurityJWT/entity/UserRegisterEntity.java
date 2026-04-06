@@ -6,8 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "user_auth")
@@ -24,6 +23,21 @@ public class UserRegisterEntity implements UserDetails {
     private String password;
 
     private String role;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<UserPermissionEntity> permissions = new ArrayList<>();
+
+    public List<UserPermissionEntity> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<UserPermissionEntity> permissions) {
+        this.permissions = permissions;
+    }
+
+    public Long getId() {
+        return id;
+    }
 
     public void setUsername(String username) {
         this.username = username;
@@ -43,7 +57,11 @@ public class UserRegisterEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role));
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        authorities.add(new SimpleGrantedAuthority(role));
+        permissions.forEach(permission ->
+                authorities.add(new SimpleGrantedAuthority(permission.getName())));
+        return authorities;
     }
 
     @Override

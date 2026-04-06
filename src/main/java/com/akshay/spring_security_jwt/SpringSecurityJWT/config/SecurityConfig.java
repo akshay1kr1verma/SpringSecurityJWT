@@ -13,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -26,6 +27,7 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     private JWTUtil jwtUtil;
@@ -86,7 +88,13 @@ public class SecurityConfig {
                         )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterAfter(jwtValidationFilter, JWTAuthenticationFilter.class) // validate token filter;
-                .addFilterAfter(jwtRefreshFilter, JwtValidationFilter.class); // refresh token filter
+                .addFilterAfter(jwtRefreshFilter, JwtValidationFilter.class) // refresh token filter
+        /**
+         *
+         * ✅ ADD THIS to allow BasicAuthorizationFilter which will call DAOAuthenticationProvider, it will fetch username
+         * and loadUserByUserName using UserDetailService. This is needed for pre and post authorize.
+         */
+                .httpBasic(Customizer.withDefaults());
         return http.build();
     }
 
